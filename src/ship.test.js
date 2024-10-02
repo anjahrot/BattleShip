@@ -20,3 +20,14 @@ test('Ship is sunk', () => {
     testShip.isSunk();
     expect(testShip.sunk).toBe(true);
 })
+
+test('Ship change direction', () => {
+    testShip.turn();
+    expect(testShip.direction).toBe('vertical');
+})
+
+test('Ship change direction twice', () => {
+    testShip.turn();
+    testShip.turn();
+    expect(testShip.direction).toBe('horizontal');
+})
