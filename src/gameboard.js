@@ -1,7 +1,10 @@
 export default class Gameboard {
     constructor (ships=0){
-        this.ships = ships;
-        this.board = create2DOfZeroes();        
+        this.ships = ships;  //number of ships on the board
+        this.shipsSunk = 0;
+        this.board = create2DOfZeroes(); 
+        this.shipCoordinates = {};  //object to store coordinates and ship
+        this.missed = new Set();       
     }
 
     placeShip(ship, coordinate) {
@@ -19,6 +22,7 @@ export default class Gameboard {
         } else {
         for(let i=0; i<length;i++){
             this.board[x][y] = 1;
+            this.shipCoordinates[JSON.stringify(coordinate)]=ship;
             if(ship.direction === 'horizontal'){
                 y++;  //Increase y-coordinate by 1 to place next part of ship
             } else {
@@ -38,10 +42,33 @@ export default class Gameboard {
                 return boolean;
             }
             if(direction === 'horizontal'){
-                column++;  //Increase y-coordinate by 1 to check next 
+                column++;  //Increase y-coordinate by 1 to check next coordinate
             } else {
                 row++; 
             }
+        }
+        return boolean;
+    }
+
+    receiveAttack(coordinate) {
+        let [x,y] = coordinate;
+        if(this.board[x][y] === 1){
+            const shipHit = this.shipCoordinates[JSON.stringify(coordinate)];
+            shipHit.hit();
+            if(shipHit.sunk){
+                this.shipsSunk++;
+            }
+        }
+        else {
+            this.missed.add(JSON.stringify(coordinate));
+            this.board[x][y] === 2;
+        }
+    }
+
+    isAllShipsSunk() {
+        let boolean = false;
+        if(this.shipsSunk === 5){
+            boolean = true;
         }
         return boolean;
     }
