@@ -14,7 +14,7 @@ export default class Gameboard {
         if(this.ships === 5){
             throw new Error('all ships on board');
         }
-        else if(direction === 'horizontal' && (y+length)>9 || direction === 'vertical' && (x+length)>9){
+        else if(direction === 'horizontal' && (y+length)>10 || direction === 'vertical' && (x+length)>10){
             throw new Error('ship is outside board');
             }
         else if(this.containShip(x, y, length, direction)) {
@@ -22,7 +22,7 @@ export default class Gameboard {
         } else {
         for(let i=0; i<length;i++){
             this.board[x][y] = 1;
-            this.shipCoordinates[JSON.stringify(coordinate)]=ship;
+            this.shipCoordinates[JSON.stringify([x,y])]=ship;
             if(ship.direction === 'horizontal'){
                 y++;  //Increase y-coordinate by 1 to place next part of ship
             } else {
