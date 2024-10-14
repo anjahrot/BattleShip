@@ -1,9 +1,9 @@
 import Ship from "./ship.js";
-import Gameboard from "./gameboard.js";
 import Player from "./player.js";
+import domManager from "./DOM_Manager.js";
 
 
-function GameController() {
+export function GameController() {
 
     //Initiating players
     const player = new Player('real');
@@ -36,8 +36,7 @@ function GameController() {
     computer.playerBoard.placeShip(patrol_boat_comp, [6,2]);
 
     //Render boards showing real players board
-    console.log(player.playerBoard);
+    domManager.updateBoard(player.playerBoard.board);
 
 } 
 
-GameController();
