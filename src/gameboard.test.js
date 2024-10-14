@@ -26,9 +26,9 @@ test('Place ship on board vertically', () => {
     expect(testGameboard.board[4][3]).toBe(1);
 })
 
-test('Error when placed outside board',() => {
-    expect(() => {testGameboard.placeShip(testShip, [7,7])}).toThrow('ship is outside board');
-    expect(testGameboard.board[3][8]).toBe(0);
+test('Error when placed outside board', () => {
+    expect(() => {testGameboard.placeShip(testShip, [7,8])}).toThrow('ship is outside board');
+    expect(testGameboard.board[7][8]).toBe(0);
 })
 
 test('Error when spot is already occupied', () => {
