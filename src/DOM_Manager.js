@@ -19,7 +19,9 @@ const domManager = (() => {
         board.forEach(row => {
             row.forEach((square, columnIndex) => {
                 const squareButton = document.createElement("button");
+                const circle = document.createElement("div");
                 squareButton.classList.add('square');
+                circle.classList.add('dot');
                 //need row and column index to choose squares in DOM
                 squareButton.dataset.row = rowIndex;
                 squareButton.dataset.column = columnIndex;
@@ -33,12 +35,12 @@ const domManager = (() => {
 
                 //Show squares that have received attack, and if hit or missed
                 if(board[rowIndex][columnIndex] === 2){
-                    console.log('add red circle to square');
-                    //Add red circle to square
+                    circle.style.backgroundColor = 'red';
+                    squareButton.appendChild(circle);
                 }
                 else if(player.playerBoard.missed.has(JSON.stringify([rowIndex, columnIndex]))){
-                    console.log('add black circle to square');
-                    //Add black circle
+                    circle.style.backgroundColor = 'black';
+                    squareButton.appendChild(circle);
                 }
 
                 //Append to the right player board
