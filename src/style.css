@@ -45,3 +45,9 @@ body {
     border: 1px solid black;
     cursor: pointer;
 }
+
+.dot {
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+}
