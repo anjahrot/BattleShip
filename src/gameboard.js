@@ -55,15 +55,25 @@ export default class Gameboard {
         if(this.board[x][y] === 1){
             console.log('Ship is hit');
             this.board[x][y] = 2;  //Set value to 2 if ship is hit, to use in DOM
-            const shipHit = this.shipCoordinates[JSON.stringify(coordinate)];
+            const shipHit = this.shipCoordinates[`[${x},${y}]`];         
             shipHit.hit();
-            if(shipHit.sunk){
+            if(shipHit.isSunk()){
                 this.shipsSunk++;
             }
         }
         else {
-            this.missed.add(JSON.stringify(coordinate));
+            this.missed.add(`[${x},${y}]`);
         }
+    }
+
+    //Method to check if spot on board has already received attack
+    isCoordinateAttacked(coordinate) {
+        let [x,y] = coordinate;
+        let boolean = false;
+        if(this.missed.has(`[${x},${y}]`) || this.board[x][y] === 2){
+            boolean = true;
+        }
+        return boolean;
     }
 
     isAllShipsSunk() {
