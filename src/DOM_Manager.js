@@ -1,14 +1,19 @@
 const domManager = (() => {
 
-    const boardDiv = document.querySelector(".board");
     const boardRealPlayer = document.querySelector(".realPlayerBoard");
     const boardComputer = document.querySelector(".computerBoard");
 
     //update board after turn
-    const updateBoard = (board) => {
+    const updateBoard = (player) => {
         //clear content before rendering updated screen
-        boardRealPlayer.textContent = '';
+        if(player.type === 'real') {
+            boardRealPlayer.textContent = '';
+        } else {
+            boardComputer.textContent = '';
+        }
         
+        let board = player.playerBoard.board;
+
         //render board
         let rowIndex = 0;
         board.forEach(row => {
@@ -19,13 +24,29 @@ const domManager = (() => {
                 squareButton.dataset.row = rowIndex;
                 squareButton.dataset.column = columnIndex;
                 
-                if(board[rowIndex][columnIndex] === 0){
-                    squareButton.style.backgroundColor = "grey";
+                if(board[rowIndex][columnIndex] === 0 || player.type === 'computer'){
+                    squareButton.style.backgroundColor = "lightgrey";
                 }
                 else {
-                     squareButton.style.backgroundColor = "black";
+                     squareButton.style.backgroundColor = "darkgrey";
                 }
-                boardRealPlayer.appendChild(squareButton);
+
+                //Show squares that have received attack, and if hit or missed
+                if(board[rowIndex][columnIndex] === 2){
+                    console.log('add red circle to square');
+                    //Add red circle to square
+                }
+                else if(player.playerBoard.missed.has(JSON.stringify([rowIndex, columnIndex]))){
+                    console.log('add black circle to square');
+                    //Add black circle
+                }
+
+                //Append to the right player board
+                if(player.type === 'real'){
+                    boardRealPlayer.appendChild(squareButton);
+                } else {
+                    boardComputer.appendChild(squareButton);
+                }
             })
             rowIndex++;
         })

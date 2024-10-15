@@ -4,7 +4,7 @@ export default class Gameboard {
         this.shipsSunk = 0;
         this.board = create2DOfZeroes(); 
         this.shipCoordinates = {};  //object to store coordinates and ship
-        this.missed = new Set();       
+        this.missed = new Set();      
     }
 
     placeShip(ship, coordinate) {
@@ -53,6 +53,8 @@ export default class Gameboard {
     receiveAttack(coordinate) {
         let [x,y] = coordinate;
         if(this.board[x][y] === 1){
+            console.log('Ship is hit');
+            this.board[x][y] = 2;  //Set value to 2 if ship is hit, to use in DOM
             const shipHit = this.shipCoordinates[JSON.stringify(coordinate)];
             shipHit.hit();
             if(shipHit.sunk){
@@ -61,7 +63,6 @@ export default class Gameboard {
         }
         else {
             this.missed.add(JSON.stringify(coordinate));
-            this.board[x][y] === 2;
         }
     }
 

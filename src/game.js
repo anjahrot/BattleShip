@@ -35,8 +35,25 @@ export function GameController() {
     computer.playerBoard.placeShip(submarine_comp, [0,2]);
     computer.playerBoard.placeShip(patrol_boat_comp, [6,2]);
 
-    //Render boards showing real players board
-    domManager.updateBoard(player.playerBoard.board);
+    //Render boards, showing ships on real players board
+    domManager.updateBoard(player);
+    domManager.updateBoard(computer);
+
+    //Add eventlisteners for the computer board
+    const computerBoard = document.querySelector(".computerBoard");
+    computerBoard.addEventListener("click", clickHandlerBoard);
+
+    function clickHandlerBoard(e) {
+        const selectedRow = e.target.dataset.row;
+        const selectedColumn = e.target.dataset.column;
+        //console.log(`Selected: row ${selectedRow} and column ${selectedColumn}`);
+
+        //If hit gap between squares
+        if(!selectedColumn) return;
+
+        
+    }
+    //player.playerBoard.receiveAttack([0,1]);
 
 } 
 
