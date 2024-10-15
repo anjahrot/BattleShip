@@ -51,9 +51,37 @@ export function GameController() {
         //If hit gap between squares
         if(!selectedColumn) return;
 
+        if(computer.playerBoard.isCoordinateAttacked([selectedRow,selectedColumn])){
+            console.log('Already guessed, try different one...');
+        }
+        else {
+            computer.playerBoard.receiveAttack([selectedRow,selectedColumn]);
+            domManager.updateBoard(computer);
+            if(computer.playerBoard.isAllShipsSunk()) {
+                //DOM-stuff
+                console.log('You win!')
+            }
+            else {
+                computerPlay();
+            }
+        }
         
     }
-    //player.playerBoard.receiveAttack([0,1]);
+
+    function computerPlay() {
+        const x = Math.floor(Math.random()*10);
+        const y = Math.floor(Math.random()*10);
+        if(player.playerBoard.isCoordinateAttacked([x,y])){
+            computerPlay();
+        }
+        else {
+            player.playerBoard.receiveAttack([x,y]);
+            domManager.updateBoard(player);
+            if(player.playerBoard.isAllShipsSunk()) {
+                console.log('Computer wins');
+            }
+        }
+    }
 
 } 
 
