@@ -49,13 +49,27 @@ const domManager = (() => {
                 } else {
                     boardComputer.appendChild(squareButton);
                 }
+            //Hovereffect on mouseover on computerboard
+            if(player.type === 'computer'){
+                squareButton.addEventListener('mouseover', function () {
+                    squareButton.style.backgroundColor = 'darkgrey';
+                });
+
+                squareButton.addEventListener('mouseout', function () {
+                    squareButton.style.backgroundColor = 'lightgrey';
+                });
+            }
             })
             rowIndex++;
         })
     }
 
+    const declareWinner = (player) => {
+        const winnerText = document.querySelector(".winner");
+        winnerText.textContent = `${player} won the game this time! Play again?`;
+    } 
 
-    return {updateBoard}
+    return {updateBoard, declareWinner}
 
 })();
 
