@@ -58,8 +58,8 @@ export function GameController() {
             computer.playerBoard.receiveAttack([selectedRow,selectedColumn]);
             domManager.updateBoard(computer);
             if(computer.playerBoard.isAllShipsSunk()) {
-                //DOM-stuff
-                console.log('You win!')
+                domManager.declareWinner('Congratulations! You');
+                computerBoard.removeEventListener("click", clickHandlerBoard);
             }
             else {
                 computerPlay();
@@ -78,7 +78,8 @@ export function GameController() {
             player.playerBoard.receiveAttack([x,y]);
             domManager.updateBoard(player);
             if(player.playerBoard.isAllShipsSunk()) {
-                console.log('Computer wins');
+                domManager.declareWinner('Computer');
+                computerBoard.removeEventListener("click", clickHandlerBoard);
             }
         }
     }

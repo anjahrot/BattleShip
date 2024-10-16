@@ -53,7 +53,6 @@ export default class Gameboard {
     receiveAttack(coordinate) {
         let [x,y] = coordinate;
         if(this.board[x][y] === 1){
-            console.log('Ship is hit');
             this.board[x][y] = 2;  //Set value to 2 if ship is hit, to use in DOM
             const shipHit = this.shipCoordinates[`[${x},${y}]`];         
             shipHit.hit();
