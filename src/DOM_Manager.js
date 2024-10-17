@@ -2,6 +2,9 @@ const domManager = (() => {
 
     const boardRealPlayer = document.querySelector(".realPlayerBoard");
     const boardComputer = document.querySelector(".computerBoard");
+    const winnerText = document.querySelector(".winner");
+    const shipsSunkReal = document.querySelector(".shipsSunkRealPlayer");
+    const shipsSunkComp = document.querySelector(".shipsSunkComputer");
 
     //update board after turn
     const updateBoard = (player) => {
@@ -65,11 +68,18 @@ const domManager = (() => {
     }
 
     const declareWinner = (player) => {
-        const winnerText = document.querySelector(".winner");
         winnerText.textContent = `${player} won the game this time! Play again?`;
     } 
 
-    return {updateBoard, declareWinner}
+    const shipsSunkOnCompBoard = (num) => {
+        shipsSunkComp.textContent = `Number of ships sunk: ${num}`;
+    }
+    
+    const shipsSunkOnRealBoard = (num) =>{
+        shipsSunkReal.textContent = `Number of ships sunk: ${num}`;
+    }
+
+    return {updateBoard, declareWinner, shipsSunkOnCompBoard, shipsSunkOnRealBoard}
 
 })();
 

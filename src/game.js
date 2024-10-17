@@ -2,8 +2,11 @@ import Ship from "./ship.js";
 import Player from "./player.js";
 import domManager from "./DOM_Manager.js";
 
+const newGame = document.querySelector('#startBtn');
 
-export function GameController() {
+const GameController = () => {
+
+    let gameOver = false;
 
     //Initiating players
     const player = new Player('real');
@@ -38,6 +41,8 @@ export function GameController() {
     //Render boards, showing ships on real players board
     domManager.updateBoard(player);
     domManager.updateBoard(computer);
+    domManager.shipsSunkOnRealBoard(player.playerBoard.shipsSunk);
+    domManager.shipsSunkOnCompBoard(computer.playerBoard.shipsSunk);
 
     //Add eventlisteners for the computer board
     const computerBoard = document.querySelector(".computerBoard");
@@ -46,9 +51,7 @@ export function GameController() {
     function clickHandlerBoard(e) {
         const selectedRow = e.target.dataset.row;
         const selectedColumn = e.target.dataset.column;
-        //console.log(`Selected: row ${selectedRow} and column ${selectedColumn}`);
 
-        //If hit gap between squares
         if(!selectedColumn) return;
 
         if(computer.playerBoard.isCoordinateAttacked([selectedRow,selectedColumn])){
@@ -57,15 +60,16 @@ export function GameController() {
         else {
             computer.playerBoard.receiveAttack([selectedRow,selectedColumn]);
             domManager.updateBoard(computer);
+            domManager.shipsSunkOnCompBoard(computer.playerBoard.shipsSunk);
             if(computer.playerBoard.isAllShipsSunk()) {
+                gameOver = true;
                 domManager.declareWinner('Congratulations! You');
                 computerBoard.removeEventListener("click", clickHandlerBoard);
             }
             else {
                 computerPlay();
             }
-        }
-        
+        }  
     }
 
     function computerPlay() {
@@ -77,12 +81,27 @@ export function GameController() {
         else {
             player.playerBoard.receiveAttack([x,y]);
             domManager.updateBoard(player);
+            domManager.shipsSunkOnRealBoard(player.playerBoard.shipsSunk);
             if(player.playerBoard.isAllShipsSunk()) {
+                gameOver = true;
                 domManager.declareWinner('Computer');
                 computerBoard.removeEventListener("click", clickHandlerBoard);
             }
         }
     }
 
-} 
+    newGame.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if(gameOver) {
+            GameController();
+        }
+        else if(confirm('Are you sure you want to quit ongoing game?')) {
+            GameController();
+        }
+    });
+
+   
+};
+
+export default GameController;
 
