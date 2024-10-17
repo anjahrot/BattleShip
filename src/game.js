@@ -90,15 +90,17 @@ const GameController = () => {
         }
     }
 
-    newGame.addEventListener('click', (e) => {
-        e.stopPropagation();
+    newGame.addEventListener('click', startNewGame);
+       
+    function startNewGame() {
         if(gameOver) {
             GameController();
         }
         else if(confirm('Are you sure you want to quit ongoing game?')) {
+            newGame.removeEventListener('click', startNewGame);
             GameController();
         }
-    });
+    };
 
    
 };
