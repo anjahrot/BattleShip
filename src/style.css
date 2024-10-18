@@ -40,6 +40,8 @@ body {
     width: 400px;
     height: 400px;
     grid: repeat(10, 1fr) / repeat(10, 1fr);
+    gap: 1px;
+    background-color: black;
     border: 2px solid black;
 }
 

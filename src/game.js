@@ -23,6 +23,7 @@ const GameController = () => {
     const carrier_comp = new Ship(5);
     const battleship_comp = new Ship(4);
     const destroyer_comp = new Ship(3);
+    destroyer_comp.turn();
     const submarine_comp = new Ship(3);
     const patrol_boat_comp = new Ship(2);
 
@@ -32,11 +33,11 @@ const GameController = () => {
     player.playerBoard.placeShip(destroyer, [3,0]);
     player.playerBoard.placeShip(submarine, [7,7]);
     player.playerBoard.placeShip(patrol_boat, [6,2]);
-    computer.playerBoard.placeShip(carrier_comp, [1,0]);
-    computer.playerBoard.placeShip(battleship_comp, [9,0]);
-    computer.playerBoard.placeShip(destroyer_comp, [3,0]);
-    computer.playerBoard.placeShip(submarine_comp, [0,2]);
-    computer.playerBoard.placeShip(patrol_boat_comp, [6,2]);
+    computer.playerBoard.placeShipRandom(carrier_comp);
+    computer.playerBoard.placeShipRandom(battleship_comp);
+    computer.playerBoard.placeShipRandom(destroyer_comp);
+    computer.playerBoard.placeShipRandom(submarine_comp);
+    computer.playerBoard.placeShipRandom(patrol_boat_comp);
 
     //Render boards, showing ships on real players board
     domManager.updateBoard(player);

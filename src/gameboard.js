@@ -50,6 +50,22 @@ export default class Gameboard {
         return boolean;
     }
 
+    //Method to place ships randomly on the computer's board:
+    placeShipRandom (ship) {
+        const x = Math.floor(Math.random()*10);
+        const y = Math.floor(Math.random()*10);
+        try{
+            this.placeShip(ship, [x,y]);
+        }
+        catch(e){
+            if(e.message === 'spot taken' || e.message === 'ship is outside board') {
+                this.placeShipRandom(ship);
+            } else {
+                console.log('error');
+            }
+        }
+    }
+
     receiveAttack(coordinate) {
         let [x,y] = coordinate;
         if(this.board[x][y] === 1){
