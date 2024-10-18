@@ -53,6 +53,10 @@ body {
     cursor: pointer;
 }
 
+.square_inactive {
+    cursor: not-allowed;
+}
+
 .dot {
     height: 14px;
     width: 14px;

@@ -6,7 +6,6 @@ const domManager = (() => {
     const shipsSunkReal = document.querySelector(".shipsSunkRealPlayer");
     const shipsSunkComp = document.querySelector(".shipsSunkComputer");
 
-    //update board after turn
     const updateBoard = (player) => {
         //clear content before rendering updated screen
         if(player.type === 'real') {
@@ -40,14 +39,17 @@ const domManager = (() => {
                 if(board[rowIndex][columnIndex] === 2){
                     circle.style.backgroundColor = 'red';
                     squareButton.appendChild(circle);
+                    squareButton.classList.add('square_inactive');
                 }
                 else if(player.playerBoard.missed.has(JSON.stringify([rowIndex, columnIndex]))){
                     circle.style.backgroundColor = 'black';
                     squareButton.appendChild(circle);
+                    squareButton.classList.add('square_inactive');
                 }
 
                 //Append to the right player board
                 if(player.type === 'real'){
+                    squareButton.classList.add('square_inactive');
                     boardRealPlayer.appendChild(squareButton);
                 } else {
                     boardComputer.appendChild(squareButton);
