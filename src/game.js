@@ -40,6 +40,9 @@ const GameController = () => {
     computer.playerBoard.placeShipRandom(patrol_boat_comp);
 
     //Render boards, showing ships on real players board
+    domManager.renderPlaceShipBoard(player); 
+    //Function to place ship on the board, user hovering over board to choose position.
+    //After placing last ship --> modal-close doing rest of logic
     domManager.updateBoard(player);
     domManager.updateBoard(computer);
     domManager.shipsSunkOnRealBoard(player.playerBoard.shipsSunk);

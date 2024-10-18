@@ -1,10 +1,33 @@
 const domManager = (() => {
 
+    const boardPlaceShips = document.querySelector(".placeShipsBoard");
+    const shipToPlace = document.querySelector(".shipToPlace");
     const boardRealPlayer = document.querySelector(".realPlayerBoard");
     const boardComputer = document.querySelector(".computerBoard");
     const winnerText = document.querySelector(".winner");
     const shipsSunkReal = document.querySelector(".shipsSunkRealPlayer");
     const shipsSunkComp = document.querySelector(".shipsSunkComputer");
+
+    const renderPlaceShipBoard = (player) => {
+        boardPlaceShips.textContent = '';
+        let board = player.playerBoard.board;
+        let rowIndex = 0;
+        board.forEach(row => {
+            row.forEach((square, columnIndex) => {
+                const squareButton = document.createElement("button");
+                squareButton.classList.add('square');
+
+                //need row and column index to choose squares in DOM
+                squareButton.dataset.row = rowIndex;
+                squareButton.dataset.column = columnIndex;
+
+                squareButton.style.backgroundColor = "lightgrey";
+
+                boardPlaceShips.appendChild(squareButton);
+            });
+            rowIndex++;
+        });
+    }
 
     const updateBoard = (player) => {
         //clear content before rendering updated screen
@@ -81,7 +104,7 @@ const domManager = (() => {
         shipsSunkReal.textContent = `Number of ships sunk: ${num}`;
     }
 
-    return {updateBoard, declareWinner, shipsSunkOnCompBoard, shipsSunkOnRealBoard}
+    return {renderPlaceShipBoard, updateBoard, declareWinner, shipsSunkOnCompBoard, shipsSunkOnRealBoard}
 
 })();
 
