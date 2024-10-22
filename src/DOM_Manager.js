@@ -28,19 +28,48 @@ const domManager = (() => {
                 squareButton.dataset.row = rowIndex;
                 squareButton.dataset.column = columnIndex;
 
-                //Hovereffect on mouseover to show user selected and direction
-                squareButton.addEventListener('mouseover', function () {
+                if(board[rowIndex][columnIndex]===1) {
                     squareButton.style.backgroundColor = 'darkgrey';
-                });
+                }
 
-                squareButton.addEventListener('mouseout', function () {
-                    squareButton.style.backgroundColor = 'buttonface';
-                });
+                //Hovereffect on mouseover to show user selected and direction
+                squareButton.addEventListener('mouseover', showShip);
+
+                squareButton.addEventListener('mouseout', removeShip);
 
                 boardPlaceShips.appendChild(squareButton);
             });
             rowIndex++;
         });
+
+        function showShip(e){
+            //Get row and column, length and direction of ship to color squares on the board
+            const selectedRow = e.target.dataset.row;
+            const selectedColumn = e.target.dataset.column;
+
+            const squares = boardPlaceShips.querySelectorAll('.square');
+            let direction = ship.getShipDirection();
+            
+            squares.forEach((square) => {
+                if(direction === 'horizontal'){
+                    if((square.dataset.row === selectedRow) && (square.dataset.column >= selectedColumn) && (square.dataset.column < (Number(selectedColumn)+ship.length))){
+                        square.classList.add('placeShip');
+                    }
+                }
+                else if(direction === 'vertical'){
+                    if((square.dataset.column === selectedColumn) && (square.dataset.row >= selectedRow) && (square.dataset.row < (Number(selectedRow)+ship.length))){
+                        square.classList.add('placeShip');
+                    }
+                }
+            })
+        }
+
+        function removeShip(){
+            const squares = boardPlaceShips.querySelectorAll('.square');
+            squares.forEach((square) => {
+                square.classList.remove('placeShip');
+            })
+        }
     }
 
     const renderBoard = (player) => {

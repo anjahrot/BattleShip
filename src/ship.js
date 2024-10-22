@@ -22,4 +22,8 @@ export default class Ship {
         let direction = this.direction === 'horizontal' ? 'vertical' : 'horizontal';
         this.direction = direction;
     }
+
+    getShipDirection () {
+        return this.direction;
+    }
 }

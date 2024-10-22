@@ -64,6 +64,10 @@ body {
     cursor: not-allowed;
 }
 
+.placeShip {
+    background-color: rgb(243, 129, 129);
+}
+
 .dot {
     height: 14px;
     width: 14px;
