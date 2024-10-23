@@ -13,7 +13,7 @@ const domManager = (() => {
     const renderPlaceShipBoard = (player, ship) => {
         boardPlaceShips.textContent = '';
 
-        shipToPlace.textContent = `Place your ${ship.name} of length ${ship.length} on the board`;
+        shipToPlace.textContent = `Place your ${ship.name} on the board`;
 
         turnShipBtn.addEventListener("click", () => ship.turn());
 
@@ -32,7 +32,7 @@ const domManager = (() => {
                     squareButton.style.backgroundColor = 'darkgrey';
                 }
 
-                //Hovereffect on mouseover to show user selected and direction
+                //Hovereffect on mouseover to show user selected and direction of ship
                 squareButton.addEventListener('mouseover', showShip);
 
                 squareButton.addEventListener('mouseout', removeShip);

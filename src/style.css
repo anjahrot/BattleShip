@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'myWebFont';
+    src: url('fonts/graduate-regular-webfont.woff2') format('woff2'),
+         url('fonts/graduate-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +14,7 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'myWebFont', Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -17,8 +26,7 @@ body {
 }
 
 .header {
-    display: flex;
-    gap: 50px;
+    font-size: 35px;
 }
 
 .board_section {
@@ -65,7 +73,7 @@ body {
 }
 
 .placeShip {
-    background-color: rgb(243, 129, 129);
+    background-color: rgb(77, 223, 96);
 }
 
 .dot {
@@ -76,6 +84,8 @@ body {
 
 #turnShipBtn,
 #startBtn {
+    font-family: 'myWebFont', Arial, Helvetica, sans-serif;
+    font-size: 12px;
     padding: 6px 10px;
     border-radius: 10px;
     font-size: 24px;
@@ -99,6 +109,10 @@ body {
 }
 
 .modal-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
     background-color: white;
     border: 1px solid black;
     border-radius: 0.5em;

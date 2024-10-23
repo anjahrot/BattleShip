@@ -75,7 +75,7 @@ const GameController = () => {
                 }
             }
             catch(e) {
-                console.log('Can not place here...', e.message);
+                console.log('Can not place here: ', e.message);
             }          
         }
 
