@@ -66,6 +66,7 @@ const GameController = () => {
                 player.playerBoard.placeShip(ship, [selectedRow, selectedColumn]);
                 num++;
                 playerBoard.removeEventListener("click", placeShipOnBoard);
+                //Call method again until all ships are placed
                 if(num < 5){
                     placePlayerShip(num);
                 }
@@ -107,7 +108,7 @@ const GameController = () => {
             if(computer.playerBoard.isAllShipsSunk()) {
                 gameOver = true;
                 domManager.declareWinner('Congratulations! You');
-                computerBoard.removeEventListener("click", clickHandlerBoard);
+                buttons.forEach((btn) => btn.removeEventListener("click", clickHandlerBoard));
             }
             else {
                 computerPlay();
@@ -115,9 +116,28 @@ const GameController = () => {
         }  
     }
 
+
     function computerPlay() {
-        const x = Math.floor(Math.random()*10);
-        const y = Math.floor(Math.random()*10);
+        let x_hit = -1;
+        let y_hit = -1;
+        playerShips.forEach((ship) => {
+            if(ship.hits > 0 && !ship.isSunk()){
+                const coordinateHit = player.playerBoard.getLastHitCoordinates();
+                [x_hit, y_hit] = coordinateHit;
+            }
+        });
+        //Attack nearby coordinate if ship is hit or select random
+        let x;
+        let y;
+        if(x_hit != -1){
+            const newCoordinate = findNeighborCoordinate(x_hit, y_hit);
+            [x,y] = newCoordinate;
+            //use method to go through nearest coordinates not tried (attackNeighbor);
+        } else {
+            x = Math.floor(Math.random()*10);
+            y = Math.floor(Math.random()*10);
+        }
+
         if(player.playerBoard.isCoordinateAttacked([x,y])){
             computerPlay();
         }
@@ -128,15 +148,35 @@ const GameController = () => {
             if(player.playerBoard.isAllShipsSunk()) {
                 gameOver = true;
                 domManager.declareWinner('Computer');
-                computerBoard.removeEventListener("click", clickHandlerBoard);
+                buttons.forEach((btn) => btn.removeEventListener("click", clickHandlerBoard));
             }
         }
+    }
+
+    function findNeighborCoordinate(x,y) {
+        if(y<9 && !player.playerBoard.isCoordinateAttacked([x,y+1])){
+                y = y + 1;
+        } else if (y>0 && !player.playerBoard.isCoordinateAttacked([x,y-1])){
+            y = y - 1;
+        } else if (x<9 && !player.playerBoard.isCoordinateAttacked([x+1,y])){
+            x = x + 1;
+        } else if (x>0 && !player.playerBoard.isCoordinateAttacked([x-1,y])){
+            x = x - 1;
+        //Tried all immediate neighbors - go back to hit before last
+        } else {
+            player.playerBoard.deleteLastHitCoordinate();
+            let newCoordinate = player.playerBoard.getLastHitCoordinates();
+            let [x_hit,y_hit] = newCoordinate;
+            findNeighborCoordinate(x_hit,y_hit);
+        }
+        return [x,y];
     }
 
     newGame.addEventListener('click', startNewGame);
        
     function startNewGame() {
         if(gameOver) {
+            domManager.removeWinner();
             GameController();
         }
         else if(confirm('Are you sure you want to quit ongoing game?')) {

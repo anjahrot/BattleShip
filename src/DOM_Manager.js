@@ -149,6 +149,10 @@ const domManager = (() => {
         winnerText.textContent = `${player} won the game this time! Play again?`;
     } 
 
+    const removeWinner = () => {
+        winnerText.textContent = '';
+    }
+
     const shipsSunkOnCompBoard = (num) => {
         shipsSunkComp.textContent = `Number of ships sunk: ${num}`;
     }
@@ -171,7 +175,7 @@ const domManager = (() => {
         document.body.removeChild(document.querySelector('#modal-overlay'));
       };
 
-    return {openModal, closeModal, renderBoard, updateBoard, renderPlaceShipBoard, declareWinner, shipsSunkOnCompBoard, shipsSunkOnRealBoard}
+    return {openModal, closeModal, renderBoard, updateBoard, renderPlaceShipBoard, declareWinner, removeWinner, shipsSunkOnCompBoard, shipsSunkOnRealBoard}
 
 })();
 

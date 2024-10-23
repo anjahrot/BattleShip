@@ -4,7 +4,8 @@ export default class Gameboard {
         this.shipsSunk = 0;
         this.board = create2DOfZeroes(); 
         this.shipCoordinates = {};  //object to store coordinates and ship
-        this.missed = new Set();      
+        this.missed = new Set();  
+        this.hitCoordinates = new Set();    
     }
 
     placeShip(ship, coordinate) {
@@ -61,7 +62,7 @@ export default class Gameboard {
             if(e.message === 'spot taken' || e.message === 'ship is outside board') {
                 this.placeShipRandom(ship);
             } else {
-                console.log('error');
+                console.log('Error');
             }
         }
     }
@@ -70,7 +71,8 @@ export default class Gameboard {
         let [x,y] = coordinate;
         if(this.board[x][y] === 1){
             this.board[x][y] = 2;  //Set value to 2 if ship is hit, to use in DOM
-            const shipHit = this.shipCoordinates[`[${x},${y}]`];         
+            this.hitCoordinates.add([x,y]);
+            const shipHit = this.shipCoordinates[`[${x},${y}]`];      
             shipHit.hit();
             if(shipHit.isSunk()){
                 this.shipsSunk++;
@@ -97,6 +99,20 @@ export default class Gameboard {
             boolean = true;
         }
         return boolean;
+    }
+
+    getLastHitCoordinates () {
+        const list =  this.hitCoordinates;
+        console.log(list);
+        const elements = list.values().toArray();
+        const last = elements[elements.length-1];
+        return last;
+    }
+
+    deleteLastHitCoordinate () {
+        const last = this.getLastHitCoordinates();
+        console.log('Delete', last);
+        this.hitCoordinates.delete(last);
     }
         
 }
