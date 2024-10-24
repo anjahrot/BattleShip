@@ -103,7 +103,6 @@ export default class Gameboard {
 
     getLastHitCoordinates () {
         const list =  this.hitCoordinates;
-        console.log(list);
         const elements = list.values().toArray();
         const last = elements[elements.length-1];
         return last;
@@ -111,7 +110,6 @@ export default class Gameboard {
 
     deleteLastHitCoordinate () {
         const last = this.getLastHitCoordinates();
-        console.log('Delete', last);
         this.hitCoordinates.delete(last);
     }
         

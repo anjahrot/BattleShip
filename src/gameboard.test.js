@@ -6,7 +6,7 @@ let testShip;
 
 beforeEach(() => {
     testGameboard = new Gameboard();
-    testShip = new Ship(3);
+    testShip = new Ship('Destroyer', 3);
 })
 
 
